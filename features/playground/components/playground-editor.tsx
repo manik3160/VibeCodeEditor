@@ -5,7 +5,17 @@ import Editor, { type Monaco } from "@monaco-editor/react"
 import { configureMonaco, defaultEditorOptions, getEditorLanguage } from "@/features/playground/libs/editor-config"
 import type { TemplateFile } from "@/features/playground/libs/path-to-json"
 
-interface PlaygroundEditorProps {
+export interface FileSystemItem {
+  id: string;
+  name: string;
+  type: 'file' | 'folder';
+  path: string;
+  content?: string; // Content is optional, for files
+  children?: FileSystemItem[]; // Children are optional, for folders
+}
+
+
+ interface PlaygroundEditorProps {
   activeFile: TemplateFile | undefined
   content: string
   onContentChange: (value: string) => void
