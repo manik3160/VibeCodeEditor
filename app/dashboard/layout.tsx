@@ -3,6 +3,16 @@ import { DashboardSidebar } from "@/features/dashboard/dashboard-sidebar"
 import { getAllPlaygroundForUser } from "@/features/playground/actions"
 import type React from "react"
 
+// Define this interface at the top of your file
+interface PlaygroundItem {
+  id: string; // Or number, depending on your database schema
+  title: string;
+  Starmark?: {
+    isMarked: boolean;
+  }[];
+  template: string;
+}
+
 export default async function DashboardLayout({
   children,
 }: {
@@ -21,7 +31,7 @@ export default async function DashboardLayout({
   }
 
   const formattedPlaygroundData =
-    playgroundData?.map((item) => ({
+   playgroundData?.map((item: PlaygroundItem) => ({
       id: item.id,
       name: item.title,
       starred: item.Starmark?.[0]?.isMarked || false,
