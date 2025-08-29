@@ -40,25 +40,6 @@ export default function HomeLayout({
 }
 
 
-/*
-export default function HomeLayout({
-    children,
-}: {
-    children: React.ReactNode;
-}) {
-    return(
-    <>
-     {Header}
-     {Background effect and grid}
-    {main}
-    {footer}
-    <>
-    
-    
-    )
-
-
-}
 
 
 
@@ -71,4 +52,3 @@ export default function HomeLayout({
 
 
 
-*/

@@ -178,3 +178,4 @@ export const useAISuggestions = (): UseAISuggestionsReturn => {
     clearSuggestion,
   };
 };
+

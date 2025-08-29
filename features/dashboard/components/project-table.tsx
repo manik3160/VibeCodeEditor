@@ -383,27 +383,3 @@ export default function ProjectTable({
   );
 }
 
-/*
-const handleEditClick = (project: Project) => {
-  setIsEditing(true);
-  setSelectedProject(project);
-  setEditData({
-    title: project.title,
-    description: project.description || "",
-  });
-  setEditDialogOpen(true);
-};
-
-const handleDeleteClick = (project: Project) => {
-  setIsDeleting(true);
-  setSelectedProject(project);
-  setDeleteDialogOpen(true);
-  setIsDeleting(false);
-}
-const copyProjectUrl=(projectId:string)=>{
-const url=`${window.location.origin}/playground/${projectId}`;
-navigator.clipboard.writeText(url);
-toast.success("Project URL copied to clipboard");
-}
-
-*/

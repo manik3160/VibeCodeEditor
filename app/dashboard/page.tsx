@@ -25,8 +25,9 @@ const DashboardMainPage = async () => {
         {playgrounds && playgrounds.length === 0 ? (
           <EmptyState />
         ) : (
+          // Render the project table with the projects data
           // @ts-ignore
-          <ProjectTable
+          <ProjectTable 
             projects={playgrounds || []}
             onDeleteProject={deleteProjectById}
             onUpdateProject={editProjectById}

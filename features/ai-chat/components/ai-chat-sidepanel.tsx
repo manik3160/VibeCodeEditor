@@ -1140,7 +1140,7 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
                           tokens={msg.tokens}
                         />
                       )}
-                      
+
                       <div className="prose prose-invert prose-sm max-w-none">
                         <ReactMarkdown
                           remarkPlugins={[remarkGfm, remarkMath]}
@@ -1149,9 +1149,12 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
                             code: ({
                               children,
                               className,
-                            }) => (
+                              inline,
+                              ...props
+                            }: React.HTMLAttributes<HTMLElement> & { inline?: boolean }) => (
                               <EnhancedCodeBlock
                                 className={className}
+                                inline={!!inline}
                                 onInsert={
                                   onInsertCode
                                     ? (code) => handleInsertCode(code)
@@ -1159,6 +1162,9 @@ export const AIChatSidePanel: React.FC<AIChatSidePanelProps> = ({
                                 }
                                 onRun={onRunCode}
                                 theme={theme}
+                                {...Object.fromEntries(
+                                  Object.entries(props).filter(([key]) => key !== "inline")
+                                )}
                               >
                                 {String(children)}
                               </EnhancedCodeBlock>

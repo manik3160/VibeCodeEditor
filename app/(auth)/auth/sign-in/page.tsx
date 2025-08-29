@@ -58,7 +58,6 @@ const SignInFormClient = () => {
           <a href="#" className="underline hover:text-primary">
             Privacy Policy
           </a>
-          
         </p>
       </CardFooter>
     </Card>
