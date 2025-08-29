@@ -16,6 +16,7 @@ export interface FileSystemItem {
 
 
  interface PlaygroundEditorProps {
+   templateData: FileSystemItem;
   activeFile: TemplateFile | undefined
   content: string
   onContentChange: (value: string) => void
