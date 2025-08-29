@@ -1,7 +1,7 @@
 "use client";
 import React from 'react'
-import { PlaygroundEditor } from './playground-editor'
-import type { FileSystemItem } from './playground-editor'
+import { PlaygroundEditor } from '@/features/playground/components/playground-editor'
+import type { FileSystemItem } from '@/features/playground/components/playground-editor'
 
 interface PlaygroundEditorClientProps {
   templateData: FileSystemItem
@@ -15,6 +15,7 @@ const PlaygroundEditorClient: React.FC<PlaygroundEditorClientProps> = ({ templat
 
   return (
     <div className="h-screen">
+       
       <PlaygroundEditor 
         templateData={templateData} 
         onSave={handleSave}
