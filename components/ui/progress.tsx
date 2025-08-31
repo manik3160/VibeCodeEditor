@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils"
 export interface ProgressProps
   extends React.HTMLAttributes<HTMLDivElement> {
   value?: number
-  indicatorClassName?: string // <-- ADD THIS LINE
+  indicatorClassName?: string
 }
 
 type CombinedProgressProps = ProgressProps &
@@ -17,7 +17,7 @@ type CombinedProgressProps = ProgressProps &
 const Progress = React.forwardRef<
   React.ElementRef<typeof ProgressPrimitive.Root>,
   CombinedProgressProps
->(({ className, value, indicatorClassName, ...props }, ref) => ( // <-- ADD IT HERE
+>(({ className, value, indicatorClassName, ...props }, ref) => (
   <ProgressPrimitive.Root
     ref={ref}
     className={cn(
@@ -27,7 +27,7 @@ const Progress = React.forwardRef<
     {...props}
   >
     <ProgressPrimitive.Indicator
-      className={cn( // <-- USE IT HERE
+      className={cn(
         "h-full w-full flex-1 bg-primary transition-all",
         indicatorClassName
       )}
@@ -36,6 +36,6 @@ const Progress = React.forwardRef<
   </ProgressPrimitive.Root>
 ))
 
-
+Progress.displayName = "Progress"
 
 export { Progress }

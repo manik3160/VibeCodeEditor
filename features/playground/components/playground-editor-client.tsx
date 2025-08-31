@@ -17,8 +17,16 @@ const PlaygroundEditorClient: React.FC<PlaygroundEditorClientProps> = ({ templat
     <div className="h-screen">
        
       <PlaygroundEditor 
-        templateData={templateData} 
-        onSave={handleSave}
+        templateData={templateData}
+        activeFile={undefined}
+        content=""
+        onContentChange={() => {}}
+        suggestion={null}
+        suggestionLoading={false}
+        suggestionPosition={null}
+        onAcceptSuggestion={() => {}}
+        onRejectSuggestion={() => {}}
+        onTriggerSuggestion={() => {}}
       />
     </div>
   )

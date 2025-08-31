@@ -141,12 +141,15 @@ export async function POST(req: NextRequest) {
 
     const validHistory = Array.isArray(history)
       ? history.filter(
-          (msg: any) =>
+          (msg: unknown) =>
             msg &&
             typeof msg === "object" &&
-            typeof msg.role === "string" &&
-            typeof msg.content === "string" &&
-            ["user", "assistant"].includes(msg.role),
+            msg !== null &&
+            'role' in msg &&
+            'content' in msg &&
+            typeof (msg as { role: unknown }).role === "string" &&
+            typeof (msg as { content: unknown }).content === "string" &&
+            ["user", "assistant"].includes((msg as { role: string }).role),
         )
       : []
 

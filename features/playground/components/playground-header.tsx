@@ -11,40 +11,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { usePlayground } from "../context/playground-context"
+// import { usePlayground } from "../context/playground-context"
 
 export function PlaygroundHeader() {
-  const {
-    playgroundData,
-    activeFileId,
-    openFiles,
-    handleSave,
-    handleSaveAll,
-    isAISuggestionsEnabled,
-    setIsAISuggestionsEnabled,
-    setIsPreviewVisible,
-    setIsTerminalVisible,
-    isPreviewVisible,
-    isTerminalVisible,
-  } = usePlayground()
+  // const {
+  //   playgroundData,
+  //   activeFileId,
+  //   openFiles,
+  //   handleSave,
+  //   handleSaveAll,
+  //   isAISuggestionsEnabled,
+  //   setIsAISuggestionsEnabled,
+  //   setIsPreviewVisible,
+  //   setIsTerminalVisible,
+  //   isPreviewVisible,
+  //   isTerminalVisible,
+  // } = usePlayground()
 
-  const selectedFile = activeFileId ? openFiles.find((f) => f.id === activeFileId) : null
-  const hasUnsavedChanges = openFiles.some((f) => f.hasUnsavedChanges)
+  // const selectedFile = activeFileId ? openFiles.find((f) => f.id === activeFileId) : null
+  // const hasUnsavedChanges = openFiles.some((f) => f.hasUnsavedChanges)
 
   return (
     <header className="h-14 border-b flex items-center px-4 justify-between">
       <div className="flex items-center">
         <SidebarTrigger className="mr-2" />
-        <h1 className="text-lg font-semibold">{playgroundData?.name || "Code Editor"}</h1>
+        <h1 className="text-lg font-semibold">Code Editor</h1>
       </div>
 
-      {selectedFile && (
+      {/* {selectedFile && ( */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">
-            {selectedFile.fileExtension ? `${selectedFile.filename}.${selectedFile.fileExtension}` : selectedFile.filename}
+            {/* {selectedFile.fileExtension ? `${selectedFile.filename}.${selectedFile.fileExtension}` : selectedFile.filename} */}
           </span>
 
-          <Button
+          {/* <Button
             size="sm"
             variant="outline"
             onClick={() => handleSave()}
@@ -77,9 +77,9 @@ export function PlaygroundHeader() {
                 {isAISuggestionsEnabled ? "Disable" : "Enable"} AI Suggestions
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         </div>
-      )}
+      {/* )} */}
     </header>
   )
 }
