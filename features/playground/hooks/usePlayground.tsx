@@ -45,7 +45,7 @@ export const usePlayground = (id: string): UsePlaygroundReturn => {
       }
 
       // Load template from API if not in saved content
-      const res = await fetch(`/api/template/${id}`);
+      const res = await fetch(`/api/templates/${id}`);
       if (!res.ok) throw new Error(`Failed to load template: ${res.status}`);
 
       const templateRes = await res.json();

@@ -131,39 +131,68 @@ Generate suggestion:`
 async function generateSuggestion(prompt: string): Promise<string> {
   try {
     // Replace this with your actual AI service call
-    const response = await fetch("http://localhost:11434/api/generate", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        model: "gpt-oss:20b",
-        prompt,
-        stream: false,
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 120000) // 2 minute timeout for large model
+
+    try {
+      const response = await fetch("http://localhost:11434/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "gpt-oss:latest",
+          prompt,
+          stream: false,
         options: {
-          temperature: 0.7,
-          max_tokens: 300,
+          temperature: 0.3, // Lower temperature for more focused responses
+          max_tokens: 200, // Shorter responses for faster generation
+          top_p: 0.9,
+          repeat_penalty: 1.1,
+          num_ctx: 2048, // Smaller context window for faster processing
         },
-      }),
-    })
+        }),
+        signal: controller.signal,
+      })
 
-    if (!response.ok) {
-      throw new Error(`AI service error: ${response.statusText}`)
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        throw new Error(`AI service error: ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      let suggestion = data.response
+
+      // Clean up the suggestion
+      if (suggestion.includes("```")) {
+        const codeMatch = suggestion.match(/```[\w]*\n?([\s\S]*?)```/)
+        suggestion = codeMatch ? codeMatch[1].trim() : suggestion
+      }
+
+      // Remove cursor markers if present
+      suggestion = suggestion.replace(/\|CURSOR\|/g, "").trim()
+
+      return suggestion
+    } catch (error) {
+      clearTimeout(timeoutId)
+      if ((error as Error).name === "AbortError") {
+        throw new Error("Request timeout: AI model took too long to respond")
+      }
+      throw error
     }
-
-    const data = await response.json()
-    let suggestion = data.response
-
-    // Clean up the suggestion
-    if (suggestion.includes("```")) {
-      const codeMatch = suggestion.match(/```[\w]*\n?([\s\S]*?)```/)
-      suggestion = codeMatch ? codeMatch[1].trim() : suggestion
-    }
-
-    // Remove cursor markers if present
-    suggestion = suggestion.replace(/\|CURSOR\|/g, "").trim()
-
-    return suggestion
   } catch (error) {
     console.error("AI generation error:", error)
+    // Return a helpful fallback message based on the error type
+    if (error instanceof Error) {
+      if (error.message.includes("ECONNREFUSED")) {
+        return "// AI service not available - please start Ollama"
+      } else if (error.message.includes("Not Found")) {
+        return "// AI model not found - please check Ollama models"
+      } else if (error.message.includes("AI service error")) {
+        return "// AI service error - please check Ollama status"
+      } else if (error.message.includes("timeout") || error.message.includes("Headers Timeout")) {
+        return "// AI model is loading - please wait and try again"
+      }
+    }
     return "// AI suggestion unavailable"
   }
 }

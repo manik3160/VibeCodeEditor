@@ -30,7 +30,7 @@ Keep responses concise but comprehensive. Use code blocks with language specific
   const prompt = fullMessages.map((msg) => `${msg.role}: ${msg.content}`).join("\n\n")
 
   const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), 15000)
+  const timeoutId = setTimeout(() => controller.abort(), 120000) // 2 minute timeout for large model
 
   try {
     const response = await fetch("http://localhost:11434/api/generate", {
@@ -39,16 +39,16 @@ Keep responses concise but comprehensive. Use code blocks with language specific
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "codellama:latest",
+        model: "gpt-oss:latest",
         prompt,
         stream: false,
         options: {
-          temperature: 0.7,
+          temperature: 0.3, // Lower temperature for more focused responses
           top_p: 0.9,
-          max_tokens: 1000,
-          num_predict: 1000,
+          max_tokens: 500, // Shorter responses for faster generation
+          num_predict: 500,
           repeat_penalty: 1.1,
-          context_length: 4096,
+          num_ctx: 2048, // Smaller context window for faster processing
         },
       }),
       signal: controller.signal,
@@ -100,7 +100,7 @@ Return only the enhanced prompt, nothing else.`
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-oss:20b",
+        model: "gpt-oss:latest",
         prompt: enhancementPrompt,
         stream: false,
         options: {

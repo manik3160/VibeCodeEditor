@@ -117,13 +117,16 @@ export const useAISuggestions = (): UseAISuggestionsReturn => {
         const { line, column } = currentState.position;
         const sanitizedSuggestion = currentState.suggestion.replace(/^\d+:\s*/gm, "");
 
-        editor.executeEdits("", [
-          {
-            range: new monaco.Range(line, column, line, column),
-            text: sanitizedSuggestion,
-            forceMoveMarkers: true,
-          },
-        ]);
+        // Defer the editor edit to avoid setState during render
+        setTimeout(() => {
+          editor.executeEdits("", [
+            {
+              range: new monaco.Range(line, column, line, column),
+              text: sanitizedSuggestion,
+              forceMoveMarkers: true,
+            },
+          ]);
+        }, 0);
 
         // Clear decorations
         if (editor && currentState.decoration.length > 0) {
