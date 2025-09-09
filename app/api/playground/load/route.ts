@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     // Parse the request body if needed
-    const body = await request.json().catch(() => ({}));
+    await request.json().catch(() => ({}));
     
     // Your playground loading logic here
     // For example, you might load saved playground state from a database
