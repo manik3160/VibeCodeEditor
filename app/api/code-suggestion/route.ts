@@ -183,17 +183,17 @@ async function generateSuggestion(prompt: string): Promise<string> {
     console.error("AI generation error:", error)
     // Return a helpful fallback message based on the error type
     if (error instanceof Error) {
-      if (error.message.includes("ECONNREFUSED")) {
-        return "// AI service not available - please start Ollama"
+      if (error.message.includes("ECONNREFUSED") || error.message.includes("fetch failed")) {
+        return "// AI service not available - please make sure Ollama is running (e.g., 'ollama run codellama')"
       } else if (error.message.includes("Not Found")) {
-        return "// AI model not found - please check Ollama models"
+        return "// AI model not found - please check 'ollama list' and pull the model"
       } else if (error.message.includes("AI service error")) {
-        return "// AI service error - please check Ollama status"
+        return "// AI service returned an error - please check Ollama logs"
       } else if (error.message.includes("timeout") || error.message.includes("Headers Timeout")) {
-        return "// AI model is loading - please wait and try again"
+        return "// AI model is taking too long to load - please wait and try again"
       }
     }
-    return "// AI suggestion unavailable"
+    return "// AI suggestion unavailable - please check if Ollama is running on port 11434"
   }
 }
 

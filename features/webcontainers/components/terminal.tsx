@@ -37,14 +37,14 @@ const TerminalComponent = forwardRef<TerminalRef, TerminalProps>(
     const [searchTerm, setSearchTerm] = useState("");
     const [showSearch, setShowSearch] = useState(false);
 
-    // Dynamically import xterm only on client
-    const initializeTerminal = useCallback(async () => {
+    const initializeTerminal = useCallback(() => {
       if (!terminalRef.current || term.current) return;
 
-      const { Terminal } = await import("xterm");
-      const { FitAddon } = await import("xterm-addon-fit");
-      const { WebLinksAddon } = await import("xterm-addon-web-links");
-      const { SearchAddon } = await import("xterm-addon-search");
+      const { Terminal } = require("xterm");
+      const { FitAddon } = require("xterm-addon-fit");
+      const { WebLinksAddon } = require("xterm-addon-web-links");
+      const { SearchAddon } = require("xterm-addon-search");
+
 
       const terminal = new Terminal({
         cursorBlink: true,
